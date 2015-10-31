@@ -6,8 +6,8 @@ int buttonPins [] = {2,3};
 int leftButtonState = 1;
 int rightButtonState = 1;
 int lastPressState;
-int total_1 = 0;
-int total_2 = 0;
+volatile int total_1 = 0;
+volatile int total_2 = 0;
 int listSwitch = 1;
 int lastSwitch;
 // These variables are used for checking and storing times
@@ -47,6 +47,8 @@ void setup() {
 //Sets the input pin for buttons
    pinMode(buttonPins[0], INPUT_PULLUP);
    pinMode(buttonPins[1], INPUT_PULLUP);
+
+   attachInterrupt(digitalPinToInterrupt(buttonPins[0]), countUp, FALLING);
 
 }
 
@@ -271,4 +273,8 @@ void loop() {
  * can then press the right button once to exit the selection menu.
  */
 
+}
+
+void countUp() {
+  total_1 ++;
 }
