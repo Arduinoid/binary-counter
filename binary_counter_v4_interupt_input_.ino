@@ -57,10 +57,16 @@ void loop() {
 }
 
 void countUp() {
-  if (digitalRead(buttonPins[1]) == LOW) {
-    total_1 --;
+  static unsigned long last_interrupt_time = 0;
+  unsigned long interrupt_time = millis();
+
+  if (interrupt_time - last_interrupt_time > 100) {
+    if (digitalRead(buttonPins[1]) == LOW) {
+      total_1 --;
+    }
+    else {
+      total_1 ++;
+    }
   }
-  else {
-    total_1 ++;
-  }
+  last_interrupt_time = interrupt_time;
 }
